@@ -21,7 +21,6 @@ dim(resume) # rows and columns
 head(resume) # display first few rows
 
 tail(resume) # display last few rows
-glimpse(resume) # check data types - strings, integers, floats, etc
 summary(resume) # simple descriptive statistics
 
 ############################
