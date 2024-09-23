@@ -1,17 +1,17 @@
 
-library("devtools")
-install_github("kosukeimai/qss-package", build_vignettes = TRUE)
+install.packages('devtools')
+install.packages('tidyverse')
 
+library(devtools)
 library(tidyverse)
-library(qss)
+
 
 ############################
 # Loading and saving data
 ############################
 
-data(resume, package = 'qss')
-write.csv(resume, 'resume.csv', row.names = FALSE)
 resume = read.csv('resume.csv')
+# write.csv(resume, 'resume.csv', row.names = FALSE)
 
 ############################
 # Summarising data
@@ -19,12 +19,13 @@ resume = read.csv('resume.csv')
 
 dim(resume) # rows and columns
 head(resume) # display first few rows
+
 tail(resume) # display last few rows
 glimpse(resume) # check data types - strings, integers, floats, etc
 summary(resume) # simple descriptive statistics
 
 ############################
-# how any African-American sounding surnames receive a call back?
+# how many African-American sounding surnames receive a call back?
 
 resume %>%
   group_by(race, call) %>%
