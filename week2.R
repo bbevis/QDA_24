@@ -27,6 +27,7 @@ minwage = read.csv('minwage.csv')
 
 head(minwage)
 summary(minwage)
+
 unique(minwage$location)
 unique(minwage$chain)
 
