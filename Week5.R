@@ -91,3 +91,52 @@ social %>%
   mutate(age = 2024 - yearofbirth) %>%
   with(summary(lm(log(hhsize) ~ log(age))))
 
+
+#####################################
+# Regression Discontinuity Design
+######################################
+
+URL <- "https://raw.githubusercontent.com/DS4PS/pe4ps-textbook/master/data/RegDisc2.csv"
+data <- read.csv( URL, stringsAsFactors=F )
+
+# We are going to replicate a study conducted by Carpenter and Dobkin (2009)
+# on the effect of alcohol consumption on mortality rates.
+# Statistics related to the effect of alcohol consumption are worrisome,
+# from high mortality rates due to car accidents to health realted problems, especially among young adults.
+
+# Data are made available by Josh Angrist and Steve Pischke here: http://masteringmetrics.com/resources/.
+
+data = data %>%
+  mutate(Treatment = ifelse( data$agecell > 21, 1, 0 ),
+         age_c = agecell - 21)
+
+reg1 = lm( all ~ Treatment + age_c, data = data ) # 	Overall mortality rate
+reg2 = lm( mva ~ Treatment + age_c, data = data ) # Mortality rate for car accidents
+reg3 = lm( alcohol ~ Treatment + age_c, data = data )
+reg4 = lm( drugs ~ Treatment + age_c, data = data )
+
+summary(reg1)
+summary(reg2)
+
+
+# We first predict the final exam grades based on our regression discontinuity model.
+predfit = predict(reg2, data)
+
+# We set colors for the graph
+palette(c(adjustcolor("steelblue", alpha.f=1),
+            adjustcolor("darkred", alpha.f=1)))
+
+# To differently color the treatment and control group
+# we need to create a new Treatment variable that where the Control group = 2.
+data = data %>%
+  mutate(Treatment2 = ifelse(Treatment==0,2,1))
+
+# Plot our observed value
+
+data %>%
+  ggplot(aes(x = age_c, y = mva, color=Treatment2)) +
+  geom_point() +
+  # geom_smooth(method = "lm", se = FALSE) +
+  geom_abline() +
+  geom_vline(xintercept=0, color="red") +
+  theme_minimal()
