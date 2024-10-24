@@ -123,8 +123,8 @@ summary(reg2)
 predfit = predict(reg2, data)
 
 # We set colors for the graph
-palette(c(adjustcolor("steelblue", alpha.f=1),
-            adjustcolor("darkred", alpha.f=1)))
+palette(c(adjustcolor("steelblue"),
+            adjustcolor("darkred")))
 
 # To differently color the treatment and control group
 # we need to create a new Treatment variable that where the Control group = 2.
