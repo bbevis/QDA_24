@@ -94,7 +94,7 @@ social %>%
 
 #####################################
 # Regression Discontinuity Design
-######################################
+#####################################
 
 URL <- "https://raw.githubusercontent.com/DS4PS/pe4ps-textbook/master/data/RegDisc2.csv"
 data <- read.csv( URL, stringsAsFactors=F )
@@ -102,12 +102,12 @@ data <- read.csv( URL, stringsAsFactors=F )
 # We are going to replicate a study conducted by Carpenter and Dobkin (2009)
 # on the effect of alcohol consumption on mortality rates.
 # Statistics related to the effect of alcohol consumption are worrisome,
-# from high mortality rates due to car accidents to health realted problems, especially among young adults.
+# from high mortality rates due to car accidents to health related problems, especially among young adults.
 
 # Data are made available by Josh Angrist and Steve Pischke here: http://masteringmetrics.com/resources/.
 
 data = data %>%
-  mutate(Treatment = ifelse( data$agecell > 21, 1, 0 ),
+  mutate(Treatment = ifelse(agecell > 21, 1, 0 ),
          age_c = agecell - 21)
 
 reg1 = lm( all ~ Treatment + age_c, data = data ) # 	Overall mortality rate
@@ -139,4 +139,5 @@ data %>%
   # geom_smooth(method = "lm", se = FALSE) +
   geom_abline() +
   geom_vline(xintercept=0, color="red") +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position = 'None')
