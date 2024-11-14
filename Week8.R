@@ -3,10 +3,10 @@
 # Week 8 - Advanced Estimation
 #################################
 
-install.packages("sandwich")
-install.packages("lmtest")
-install.packages("plm")
-install.packages("AER")
+# install.packages("sandwich")
+# install.packages("lmtest")
+# install.packages("plm")
+# install.packages("AER")
 
 # Load necessary libraries
 library(tidyverse)         # For data manipulation
@@ -97,16 +97,3 @@ summary(iv_model)
 # Explanation:
 # 'ivreg' directly estimates a 2SLS model, where we specify y ~ x and indicate
 # z as an instrument for x. It performs both stages internally.
-
-### Additional Notes ###
-# Robust Standard Errors: For more reliable inference, use robust standard errors
-coeftest(fe_model, vcov = vcovHC(fe_model, type = "HC1"))
-coeftest(twfe_model, vcov = vcovHC(twfe_model, type = "HC1"))
-coeftest(iv_model, vcov = vcovHC(iv_model, type = "HC1"))
-
-# Explanation:
-# 'vcovHC' calculates heteroskedasticity-consistent standard errors, improving reliability
-# of inference, especially in large samples or where heteroskedasticity is suspected.
-
-# Summary: This code covers core techniques for analyzing panel data with fixed effects,
-# controlling for trends, and handling endogeneity with IVs and 2SLS.
